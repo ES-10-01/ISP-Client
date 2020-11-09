@@ -5,6 +5,7 @@ import { ColorSchemeName } from 'react-native';
 import FirstLoginScreen from '../screens/FirstLoginScreen';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
+import PinLoginScreen from '../screens/PinLoginScreen';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -30,6 +31,7 @@ function RootNavigator() {
       <Stack.Screen name="Root" component={BottomTabNavigator} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="FirstLogin" component={FirstLoginScreen} />
+      <Stack.Screen name="PinLogin" component={PinLoginScreen} />
     </Stack.Navigator>
   );
 }

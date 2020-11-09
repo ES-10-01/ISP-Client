@@ -5,8 +5,10 @@ import { Button } from 'react-native-paper';
 import { Text, View } from '../components/Themed';
 
 export default function TabOneScreen(props: any) {
-    function openFirstLoginScreen() {
-        props.navigation.navigate('FirstLogin');
+    function openScreen(screenName: string) {
+        return () => {
+            props.navigation.navigate(screenName);
+        };
     }
 
     return (
@@ -16,7 +18,8 @@ export default function TabOneScreen(props: any) {
             <Text>- компонент в /screens</Text>
             <Text>- регистрация в navigation/index.tsx</Text>
             <Text>- добавляем тут кнопку</Text>
-            <Button onPress={openFirstLoginScreen}>First Login Screen</Button>
+            <Button onPress={openScreen('FirstLogin')}>First Login Screen</Button>
+            <Button onPress={openScreen('PinLogin')}>PIN Login Screen</Button>
         </View>
     );
 }

@@ -41,17 +41,11 @@ export default function FirstLoginScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        //flex: 1,
         marginTop: '30%',
         height: '100%',
-        // alignItems: 'center',
-        // justifyContent: 'center',
     },
     formContainer: {
         marginLeft: '10%',
         marginRight: '10%',
-        // backgroundColor: '#000',
-        // width: '90%',
-        // alignItems: 'center',
     }
 });
