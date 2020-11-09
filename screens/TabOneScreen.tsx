@@ -1,15 +1,23 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
+import { Button } from 'react-native-paper';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
-export default function TabOneScreen() {
+export default function TabOneScreen(props: any) {
+    function openFirstLoginScreen() {
+        props.navigation.navigate('FirstLogin');
+    }
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Tab One</Text>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-            <EditScreenInfo path="/screens/TabOneScreen.js" />
+            <Text>Тут ссылки экраны для теста.</Text>
+            <Text>{'\n'}Добавление экрана:</Text>
+            <Text>- компонент в /screens</Text>
+            <Text>- регистрация в navigation/index.tsx</Text>
+            <Text>- добавляем тут кнопку</Text>
+            <Button onPress={openFirstLoginScreen}>First Login Screen</Button>
         </View>
     );
 }
