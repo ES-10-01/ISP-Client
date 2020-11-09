@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, Headline, Text, TextInput } from 'react-native-paper';
+import { Button, Colors, Headline, IconButton, Modal, Portal, Text, TextInput, Title } from 'react-native-paper';
 
 import { View } from '../components/Themed';
 import TopOffset from '../components/TopOffset';
 
 export default function PinLoginScreen() {
     const [pin, setPin] = React.useState('');
+    const [isFingerprint, setIsFingerprint] = React.useState(false);
+
+    const enableFingerprint = () => setIsFingerprint(true);
+    const disableFingerprint = () => setIsFingerprint(false);
 
     const printPin = () => {
         let nums = pin.split('');
@@ -52,11 +56,33 @@ export default function PinLoginScreen() {
                         <NumBtn num={'9'} />
                     </View>
                     <View style={styles.rowStyle}>
-                        <Button>F</Button>
+                        <IconButton
+                            onPress={enableFingerprint}
+                            icon="fingerprint"
+                            color={Colors.purple500}
+                            size={20}
+                            style={{ width: 50, }}
+                        />
                         <NumBtn num={'0'} />
-                        <Button onPress={delChar}>del</Button>
+                        <IconButton
+                            onPress={delChar}
+                            icon="close"
+                            color={Colors.purple500}
+                            size={20}
+                            style={{ width: 50, }}
+                        />
+                        {/* <Button onPress={delChar}>del</Button> */}
                     </View>
                 </View>
+                <Portal>
+                    <Modal visible={isFingerprint} onDismiss={disableFingerprint} contentContainerStyle={styles.modalContainerStyle}>
+                        <Title>Вход по отпечатку</Title>
+                        <Text>
+                            Приложите палец к сканеру отпечатка.{'\n'}
+                            Если нет сканера, используйте пин-код.
+                        </Text>
+                    </Modal>
+                </Portal>
             </View>
         </View>
     );
@@ -74,5 +100,10 @@ const styles = StyleSheet.create({
     rowStyle: {
         flexDirection: 'row',
         justifyContent: 'center',
+    },
+
+    modalContainerStyle: {
+        backgroundColor: 'white',
+        padding: 20,
     },
 });
