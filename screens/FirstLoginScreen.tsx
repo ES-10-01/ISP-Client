@@ -2,7 +2,6 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Button, Headline, Text, TextInput } from 'react-native-paper';
 
-import EditScreenInfo from '../components/EditScreenInfo';
 import { View } from '../components/Themed';
 import TopOffset from '../components/TopOffset';
 
