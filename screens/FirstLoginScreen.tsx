@@ -41,7 +41,7 @@ export default function FirstLoginScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: '30%',
+        marginTop: '45%',
         height: '100%',
     },
     formContainer: {

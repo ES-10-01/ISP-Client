@@ -24,7 +24,7 @@ export default function PinLoginScreen() {
             if (pin.length < 4)
                 setPin(pin + props.num);
         }
-        return (<Button onPress={numPress}>{props.num}</Button>);
+        return (<Button onPress={numPress} labelStyle={styles.numBtnStyle}>{props.num}</Button>);
     };
 
     const delChar = () => {
@@ -100,6 +100,9 @@ const styles = StyleSheet.create({
     rowStyle: {
         flexDirection: 'row',
         justifyContent: 'center',
+    },
+    numBtnStyle: {
+        fontSize: 20,
     },
 
     modalContainerStyle: {
