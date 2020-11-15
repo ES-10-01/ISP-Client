@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 import FirstLoginScreen from '../screens/FirstLoginScreen';
+import LockListScreen from '../screens/LockListScreen';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import PinLoginScreen from '../screens/PinLoginScreen';
@@ -32,6 +33,7 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="FirstLogin" component={FirstLoginScreen} />
       <Stack.Screen name="PinLogin" component={PinLoginScreen} />
+      <Stack.Screen name="LockList" component={LockListScreen} />
     </Stack.Navigator>
   );
 }
