@@ -2,6 +2,7 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
+import ConfirmCodeScreen from '../screens/ConfirmCodeScreen';
 import FirstLoginScreen from '../screens/FirstLoginScreen';
 import LockListScreen from '../screens/LockListScreen';
 
@@ -34,6 +35,7 @@ function RootNavigator() {
       <Stack.Screen name="FirstLogin" component={FirstLoginScreen} />
       <Stack.Screen name="PinLogin" component={PinLoginScreen} />
       <Stack.Screen name="LockList" component={LockListScreen} />
+      <Stack.Screen name="ConfirmCode" component={ConfirmCodeScreen} />
     </Stack.Navigator>
   );
 }
