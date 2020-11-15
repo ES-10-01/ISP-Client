@@ -8,6 +8,7 @@ import LockListScreen from '../screens/LockListScreen';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import PinLoginScreen from '../screens/PinLoginScreen';
+import UserListScreen from '../screens/UserListScreen';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -36,6 +37,7 @@ function RootNavigator() {
       <Stack.Screen name="PinLogin" component={PinLoginScreen} />
       <Stack.Screen name="LockList" component={LockListScreen} />
       <Stack.Screen name="ConfirmCode" component={ConfirmCodeScreen} />
+      <Stack.Screen name="UserList" component={UserListScreen} />
     </Stack.Navigator>
   );
 }

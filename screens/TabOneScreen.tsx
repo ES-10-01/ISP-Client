@@ -22,6 +22,7 @@ export default function TabOneScreen(props: any) {
             <Button onPress={openScreen('PinLogin')}>PIN Login Screen</Button>
             <Button onPress={openScreen('LockList')}>Lock List Screen</Button>
             <Button onPress={openScreen('ConfirmCode')}>Confirm Code Screen</Button>
+            <Button onPress={openScreen('UserList')}>User List Screen</Button>
         </View>
     );
 }
