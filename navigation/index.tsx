@@ -5,7 +5,10 @@ import { ColorSchemeName } from 'react-native';
 import ConfirmCodeScreen from '../screens/ConfirmCodeScreen';
 import FirstLoginScreen from '../screens/FirstLoginScreen';
 import LockListScreen from '../screens/LockListScreen';
-
+import AddUserScreen from '../screens/AddUserScreen';
+import RenameLockScreen from '../screens/RenameLockScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+import ChangePasswordScreen from  '../screens/ChangePasswordScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import PinLoginScreen from '../screens/PinLoginScreen';
 import UserListScreen from '../screens/UserListScreen';
@@ -38,6 +41,10 @@ function RootNavigator() {
       <Stack.Screen name="LockList" component={LockListScreen} />
       <Stack.Screen name="ConfirmCode" component={ConfirmCodeScreen} />
       <Stack.Screen name="UserList" component={UserListScreen} />
+      <Stack.Screen name="AddUser" component={AddUserScreen} />
+      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="RenameLock" component={RenameLockScreen} />
+      <Stack.Screen name="ChangePassword" component={ChangePasswordScreen } />
     </Stack.Navigator>
   );
 }

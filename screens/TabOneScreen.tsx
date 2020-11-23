@@ -17,12 +17,16 @@ export default function TabOneScreen(props: any) {
             <Text>{'\n'}Добавление экрана:</Text>
             <Text>- компонент в /screens</Text>
             <Text>- регистрация в navigation/index.tsx</Text>
-            <Text>- добавляем  тут кнопку</Text>
+            <Text>- добавляем тут кнопку</Text>
             <Button onPress={openScreen('FirstLogin')}>First Login Screen</Button>
             <Button onPress={openScreen('PinLogin')}>PIN Login Screen</Button>
             <Button onPress={openScreen('LockList')}>Lock List Screen</Button>
             <Button onPress={openScreen('ConfirmCode')}>Confirm Code Screen</Button>
             <Button onPress={openScreen('UserList')}>User List Screen</Button>
+            <Button onPress={openScreen('ChangePassword')}>Change password</Button>
+            <Button onPress={openScreen('AddUser')}> Add user </Button>
+            <Button onPress={openScreen('Settings')}>Settings</Button>
+            <Button onPress={openScreen('RenameLock')}>Rename Lock</Button>
         </View>
     );
 }
