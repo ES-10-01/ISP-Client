@@ -27,6 +27,7 @@ export default function TabOneScreen(props: any) {
             <Button onPress={openScreen('AddUser')}> Add user </Button>
             <Button onPress={openScreen('Settings')}>Settings</Button>
             <Button onPress={openScreen('RenameLock')}>Rename Lock</Button>
+            
         </View>
     );
 }
