@@ -1,7 +1,8 @@
+import { createUserCreds } from "./UserCreds";
+
 const INITIAL_STATE = {
     isAuth: false,
-    username: '',
-    password: '',
+    creds: createUserCreds(0, ''),
     isAdmin: false,
 };
 
@@ -11,8 +12,7 @@ const reducer = (state = INITIAL_STATE, action: any) => {
             return {
                 ...state,
                 isAuth: true,
-                username: action.username,
-                password: action.password,
+                creds: createUserCreds(action.userUid, action.password),
                 isAdmin: action.isAdmin,
             };
         default:

@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
 
 export function boundSetAuth(dispatch: Dispatch,
-        username: string, password: string, isAdmin: boolean) {
+        userUid: number, password: string, isAdmin: boolean) {
     dispatch({
-        'type': 'AUTH',
-        username,
+        type: 'AUTH',
+        userUid,
         password,
         isAdmin
     });
