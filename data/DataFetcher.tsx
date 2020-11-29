@@ -43,18 +43,92 @@ export default class DataFetcher {
         });
     }
 
-    public adminAddUser(creds: UserCreds, privelege: 'user' | 'admin') {
-        return this.performRequest('/admin', {
+    public adminGetAllUsers(creds: UserCreds) {
+        return this.performRequest('/admin/user/all', {
             ...this.credsToObject(creds),
+        });
+    }
+
+    public adminAddUser(creds: UserCreds, name: string,
+            surname: string, privelege: 'user' | 'admin') {
+        return this.performRequest('/admin/user/add', {
+            ...this.credsToObject(creds),
+            'name': name,
+            'surname': surname,
             'privileges': privelege
         });
     }
-    
+
+    public adminDeleteUser(creds: UserCreds, targetUid: number) {
+        return this.performRequest('/admin/user/delete', {
+            ...this.credsToObject(creds),
+            'target_user_uid': targetUid
+        });
+    }
+
+    public adminUpdateUser(creds: UserCreds, targetUid: number,
+            resetPassword: boolean, privileges: 'user' | 'admin' | 'default') {
+        return this.performRequest('/admin/user/update', {
+            ...this.credsToObject(creds),
+            'target_user_uid': targetUid,
+            'reset_password': resetPassword,
+            ...(privileges == 'default' ? {} : { 'new_privileges': privileges })
+        });
+    }
+
+    public adminAddLock(creds: UserCreds, lockIp: string, lockName: string) {
+        return this.performRequest('/admin/lock/add', {
+            ...this.credsToObject(creds),
+            'lock_ip': lockIp,
+            'lock_name': lockName
+        });
+    }
+
+    public adminRenameLock(creds: UserCreds, lockUid: number, newName: string) {
+        return this.performRequest('/admin/lock/rename', {
+            ...this.credsToObject(creds),
+            'lock_uid': lockUid,
+            'lock_new_name': newName
+        });
+    }
+
+    public adminDeleteLock(creds: UserCreds, lockUid: number) {
+        return this.performRequest('/admin/lock/delete', {
+            ...this.credsToObject(creds),
+            'lock_uid': lockUid
+        });
+    }
+
+    public adminAddAccess(creds: UserCreds, lockUid: number, userUid: number) {
+        return this.performRequest('/admin/user/lock/add', {
+            ...this.credsToObject(creds),
+            'lock_uid': lockUid,
+            'target_user_uid': userUid
+        });
+    }
+
+    public adminRemoveAccess(creds: UserCreds, lockUid: number, userUid: number) {
+        return this.performRequest('/admin/user/lock/delete', {
+            ...this.credsToObject(creds),
+            'lock_uid': lockUid,
+            'target_user_uid': userUid
+        });
+    }
+
+    public adminGetUserLocks(creds: UserCreds, userUid: number) {
+        return this.performRequest('/admin/user/lock/all', {
+            ...this.credsToObject(creds),
+            'target_user_uid': userUid
+        });
+    }
+
 
     private credsToObject(creds: UserCreds) {
         return {
-            'user_uid': creds.userUid,
-            'password': creds.password
+            'credentials': {
+                'user_uid': creds.userUid,
+                'password': creds.password
+            }
         }
     }
 
