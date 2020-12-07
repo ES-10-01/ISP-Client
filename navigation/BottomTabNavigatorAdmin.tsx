@@ -5,12 +5,13 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import AccessSettingsScreen from '../screens/AccessSettingsScreen';
 import LockListScreen from '../screens/LockListScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const BottomTab = createBottomTabNavigator();
 
-export default function BottomTabNavigator() {
+export default function BottomTabNavigatorAdmin() {
     const colorScheme = useColorScheme();
 
     return (
@@ -20,6 +21,13 @@ export default function BottomTabNavigator() {
             <BottomTab.Screen
                 name="Список замков"
                 component={TabLockListNavigator}
+                options={{
+                    tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+                }}
+            />
+            <BottomTab.Screen
+                name="Настройки доступа"
+                component={TabAccessSettingsNavigator}
                 options={{
                     tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
                 }}
@@ -49,6 +57,19 @@ function TabLockListNavigator() {
                 options={{ headerTitle: 'Список замков' }}
             />
         </TabLockListStack.Navigator>
+    );
+}
+
+const TabAccessSettingsStack = createStackNavigator();
+function TabAccessSettingsNavigator() {
+    return (
+        <TabAccessSettingsStack.Navigator>
+            <TabAccessSettingsStack.Screen
+                name="TabAccessSettings"
+                component={AccessSettingsScreen}
+                options={{ headerTitle: 'Настройки доступа' }}
+            />
+        </TabAccessSettingsStack.Navigator>
     );
 }
 

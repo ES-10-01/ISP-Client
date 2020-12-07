@@ -1,55 +1,55 @@
 import { UserCreds } from "./UserCreds";
 
 export default class DataFetcher {
-    private API_BASE_URL = 'https://es-isp-server.herokuapp.com/api';
+    private static API_BASE_URL = 'https://es-isp-server.herokuapp.com/api';
 
-    public login(creds: UserCreds) {
+    public static login(creds: UserCreds) {
         return this.performRequest('/user/login', {
             ...this.credsToObject(creds)
         });
     }
 
-    public updatePassword(creds: UserCreds, newPass: string) {
+    public static updatePassword(creds: UserCreds, newPass: string) {
         return this.performRequest('/user/update', {
             ...this.credsToObject(creds),
             'new_password': newPass
         });
     }
 
-    public getAllLocks(creds: UserCreds) {
+    public static getAllLocks(creds: UserCreds) {
         return this.performRequest('/lock/all', {
             ...this.credsToObject(creds), 
         });
     }
 
-    public openLock(creds: UserCreds, lockUid: number) {
+    public static openLock(creds: UserCreds, lockUid: number) {
         return this.performRequest('/lock/open', {
             ...this.credsToObject(creds),
             'lock_uid': lockUid
         });
     }
 
-    public getLockStatus(creds: UserCreds, lockUid: number) {
+    public static getLockStatus(creds: UserCreds, lockUid: number) {
         return this.performRequest('/lock/status', {
             ...this.credsToObject(creds),
             'lock_uid': lockUid
         });
     }
 
-    public cancelLockOpen(creds: UserCreds, lockUid: number) {
+    public static cancelLockOpen(creds: UserCreds, lockUid: number) {
         return this.performRequest('/lock/cancel', {
             ...this.credsToObject(creds),
             'lock_uid': lockUid
         });
     }
 
-    public adminGetAllUsers(creds: UserCreds) {
+    public static adminGetAllUsers(creds: UserCreds) {
         return this.performRequest('/admin/user/all', {
             ...this.credsToObject(creds),
         });
     }
 
-    public adminAddUser(creds: UserCreds, name: string,
+    public static adminAddUser(creds: UserCreds, name: string,
             surname: string, privelege: 'user' | 'admin') {
         return this.performRequest('/admin/user/add', {
             ...this.credsToObject(creds),
@@ -59,14 +59,14 @@ export default class DataFetcher {
         });
     }
 
-    public adminDeleteUser(creds: UserCreds, targetUid: number) {
+    public static adminDeleteUser(creds: UserCreds, targetUid: number) {
         return this.performRequest('/admin/user/delete', {
             ...this.credsToObject(creds),
             'target_user_uid': targetUid
         });
     }
 
-    public adminUpdateUser(creds: UserCreds, targetUid: number,
+    public static adminUpdateUser(creds: UserCreds, targetUid: number,
             resetPassword: boolean, privileges: 'user' | 'admin' | 'default') {
         return this.performRequest('/admin/user/update', {
             ...this.credsToObject(creds),
@@ -76,7 +76,7 @@ export default class DataFetcher {
         });
     }
 
-    public adminAddLock(creds: UserCreds, lockIp: string, lockName: string) {
+    public static adminAddLock(creds: UserCreds, lockIp: string, lockName: string) {
         return this.performRequest('/admin/lock/add', {
             ...this.credsToObject(creds),
             'lock_ip': lockIp,
@@ -84,7 +84,7 @@ export default class DataFetcher {
         });
     }
 
-    public adminRenameLock(creds: UserCreds, lockUid: number, newName: string) {
+    public static adminRenameLock(creds: UserCreds, lockUid: number, newName: string) {
         return this.performRequest('/admin/lock/rename', {
             ...this.credsToObject(creds),
             'lock_uid': lockUid,
@@ -92,14 +92,14 @@ export default class DataFetcher {
         });
     }
 
-    public adminDeleteLock(creds: UserCreds, lockUid: number) {
+    public static adminDeleteLock(creds: UserCreds, lockUid: number) {
         return this.performRequest('/admin/lock/delete', {
             ...this.credsToObject(creds),
             'lock_uid': lockUid
         });
     }
 
-    public adminAddAccess(creds: UserCreds, lockUid: number, userUid: number) {
+    public static adminAddAccess(creds: UserCreds, lockUid: number, userUid: number) {
         return this.performRequest('/admin/user/lock/add', {
             ...this.credsToObject(creds),
             'lock_uid': lockUid,
@@ -107,7 +107,7 @@ export default class DataFetcher {
         });
     }
 
-    public adminRemoveAccess(creds: UserCreds, lockUid: number, userUid: number) {
+    public static adminRemoveAccess(creds: UserCreds, lockUid: number, userUid: number) {
         return this.performRequest('/admin/user/lock/delete', {
             ...this.credsToObject(creds),
             'lock_uid': lockUid,
@@ -115,7 +115,7 @@ export default class DataFetcher {
         });
     }
 
-    public adminGetUserLocks(creds: UserCreds, userUid: number) {
+    public static adminGetUserLocks(creds: UserCreds, userUid: number) {
         return this.performRequest('/admin/user/lock/all', {
             ...this.credsToObject(creds),
             'target_user_uid': userUid
@@ -123,7 +123,7 @@ export default class DataFetcher {
     }
 
 
-    private credsToObject(creds: UserCreds) {
+    private static credsToObject(creds: UserCreds) {
         return {
             'credentials': {
                 'user_uid': creds.userUid,
@@ -132,7 +132,7 @@ export default class DataFetcher {
         }
     }
 
-    private async performRequest(relativeUrl: string, data: any) {
+    private static async performRequest(relativeUrl: string, data: any) {
         const url = this.API_BASE_URL + relativeUrl;
         try {
             const result = await this.performRequestImpl(url, data);
@@ -146,7 +146,7 @@ export default class DataFetcher {
         }
     }
 
-    private async performRequestImpl(url: string, data: any) {
+    private static async performRequestImpl(url: string, data: any) {
         const result = await fetch(url, {
             method: 'POST',
             headers: {

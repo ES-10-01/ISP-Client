@@ -5,11 +5,7 @@ import { Button, DataTable, Headline, Text, TextInput } from 'react-native-paper
 import { View } from '../components/Themed';
 import TopOffset from '../components/TopOffset';
 
-export default function UserListScreen() {
-
-
-  
-
+export default function AccessSettingsScreen() {
     return (
         <View>
             <TopOffset />
@@ -28,7 +24,7 @@ export default function UserListScreen() {
                             </DataTable.Header>
                             
                         </DataTable>
-                        <Button  >Сохранить изменения </Button>
+                        <Button>Сохранить изменения </Button>
                     </View>
                 </ScrollView>
             </View>
