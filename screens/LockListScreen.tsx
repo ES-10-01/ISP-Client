@@ -1,12 +1,32 @@
 import * as React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Button, DataTable, Headline, Text, TextInput } from 'react-native-paper';
-
 import { View } from '../components/Themed';
 import TopOffset from '../components/TopOffset';
+import { connect } from 'react-redux';
+import DataFetcher from '../data/DataFetcher';
+import { createUserCreds } from '../data/UserCreds';
 
-export default function LockListScreen() {
+const mapStateToProps = (state: any) => {
+    const { creds} = state
+    return { creds };
+};
+
+export default connect(mapStateToProps)(LockListScreen);
+
+ function LockListScreen({ creds }:  { creds:any }) {
     const [locks, setLocks] = React.useState<any>([]);
+    React.useEffect(() => {
+            DataFetcher.getAllLocks(creds).then(json => {
+            console.log(json);
+            if (json.status == 'OK') {
+             
+                 setLocks([...json.data]);
+        }
+        else{() => setLocks([...locks, 'ОШИБКА']); }
+        });
+        
+         },[]);
 
     const renderLocks = () => {
         const toRender = [];
@@ -16,7 +36,8 @@ export default function LockListScreen() {
             toRender.push(
                 <DataTable.Row key={i}>
                     <DataTable.Cell>
-                        {lock}
+                        {lock.lock_name}
+                        
                     </DataTable.Cell>
                 </DataTable.Row>);
         }
@@ -38,7 +59,6 @@ export default function LockListScreen() {
                             </DataTable.Header>
                             {renderLocks()}
                         </DataTable>
-                        <Button onPress={() => setLocks([...locks, 'test'])}>Добавить замок (тест)</Button>
                     </View>
                 </ScrollView>
             </View>

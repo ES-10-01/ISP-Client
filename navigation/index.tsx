@@ -7,18 +7,22 @@ import FirstLoginScreen from '../screens/FirstLoginScreen';
 import LockListScreen from '../screens/LockListScreen';
 import AccessSettingsScreen from '../screens/AccessSettingsScreen'
 import AddUserScreen from '../screens/AddUserScreen';
+import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 import RenameLockScreen from '../screens/RenameLockScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import PinLoginScreen from '../screens/PinLoginScreen';
 import UserListScreen from '../screens/UserListScreen';
+import ModifyUserScreen from '../screens/ModifyUserScreen';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
+
 import { connect } from 'react-redux';
 import BottomTabNavigatorAdmin from './BottomTabNavigatorAdmin';
 import { BottomNavigation } from 'react-native-paper';
-import ChangePassword from '../screens/ResetPasswordScreen';
+import { AppRegistry } from 'react-native';
+import ModifyUser from '../screens/ModifyUserScreen';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -38,10 +42,9 @@ const Stack = createStackNavigator();
 
 function RootNavigator({ isAuth, isAdmin }:  { isAuth: boolean, isAdmin: boolean }) {
 
-    const rootScreen = RenameLockScreen;
-    //BottomTabNavigatorAdmin;
-    // (!isAuth) ? FirstLoginScreen :
-    //    (isAdmin) ? BottomTabNavigatorAdmin : 
+     const rootScreen =  
+     (!isAuth) ? FirstLoginScreen :
+      (isAdmin) ? BottomTabNavigatorAdmin : BottomTabNavigatorAdmin;
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -54,6 +57,7 @@ function RootNavigator({ isAuth, isAdmin }:  { isAuth: boolean, isAdmin: boolean
             <Stack.Screen name="UserList" component={UserListScreen} />
             <Stack.Screen name="AddUser" component={AddUserScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
+            <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />
             <Stack.Screen name="RenameLock" component={RenameLockScreen} />
             <Stack.Screen name="AccesSettings" component={AccessSettingsScreen} />
             <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />

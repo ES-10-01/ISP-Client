@@ -25,11 +25,11 @@ export default connect(mapStateToProps)(AddUser);
             setText('Укажите привелегию');
             return;
         }
-
         
         DataFetcher.adminAddUser(creds,name,surname,privilege).then(json => {
             console.log(json);
             if (json.status == 'OK') {
+            
             setText('Логин: '+ json.data.uid + ' Пароль: ' + json.data.password )
             }
             else {
