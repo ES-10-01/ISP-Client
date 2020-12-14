@@ -1,19 +1,34 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Button, Headline, Text, TextInput } from 'react-native-paper';
-
 import { View } from '../components/Themed';
 import TopOffset from '../components/TopOffset';
+import { connect } from 'react-redux';
+import { boundSetAuth } from '../data/Actions';
+import DataFetcher from '../data/DataFetcher';
+import { createUserCreds } from '../data/UserCreds';
 
 export default function AddUser() {
-    function change() {
-        //TODO
+    function addUser() {
+        if (name == null || surname ==  null) {
+            setError('Укажите имя и фамилию');
+            return;
+        }
+        if (privilege != "admin" && privilege != "user") {
+            setError('Укажите привелегию');
+            return;
+        }
+        // DataFetcher.adminAddUser(UserCreds(),name,surname,privilege);
+        
+               
+       
     }
 
 
-    const [password, setPassword] = React.useState('');
+    const [privilege, setPrivelege] = React.useState('');
     const [name, setName] = React.useState('');
-    const [login, setLogin] = React.useState('');
+    const [surname, setSurName] = React.useState('');
+    const [error, setError] = React.useState('');
 
     return (
         <View>
@@ -25,25 +40,26 @@ export default function AddUser() {
                     <TextInput
                       
                         mode="outlined"
-                        label="Имя пользователя"
+                        label="Имя "
                         value={name}
                         onChangeText={setName}
                     />
                     <TextInput
                       
-                        mode="outlined"
-                        label="Логин"
-                        value={login}
-                        onChangeText={setLogin}
-                    />
+                      mode="outlined"
+                      label="Фамилия"
+                      value={surname}
+                      onChangeText={setSurName}
+                  />
                     <TextInput
-                        secureTextEntry={true}
+                      
                         mode="outlined"
-                        label=" Пароль"
-                        value={password}
-                        onChangeText={setPassword}
+                        label="Привелегия"
+                        value={privilege}
+                        onChangeText={setPrivelege}
                     />
-                    <Button onPress={change}>Добавить пользователя</Button>
+                   
+                    <Button onPress={addUser}>Добавить пользователя</Button>
                 </View>
             </View>
         </View>
