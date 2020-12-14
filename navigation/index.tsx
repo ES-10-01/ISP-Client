@@ -37,9 +37,11 @@ function Navigation({ colorScheme, isAuth, isAdmin }: { colorScheme: ColorScheme
 const Stack = createStackNavigator();
 
 function RootNavigator({ isAuth, isAdmin }:  { isAuth: boolean, isAdmin: boolean }) {
-    const rootScreen = 
-    (!isAuth) ? FirstLoginScreen :
-       (isAdmin) ? BottomTabNavigatorAdmin : BottomTabNavigator;
+
+    const rootScreen = RenameLockScreen;
+    //BottomTabNavigatorAdmin;
+    // (!isAuth) ? FirstLoginScreen :
+    //    (isAdmin) ? BottomTabNavigatorAdmin : 
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>

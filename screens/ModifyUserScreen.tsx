@@ -19,8 +19,7 @@ export default function changeUser() {
                     <Headline style={{ textAlign: 'center', }}>Smart Lock</Headline>
                     <Button onPress={change}>Сбросить пароль </Button>
                     <Button onPress={change}>Настройка доступа</Button>
-                    <Button onPress={change}>Добавить Юзера</Button>
-                    <Button onPress={change}>Удалить Юзера</Button>
+                 
                 </View>
             </View>
         </View>
