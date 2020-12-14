@@ -8,17 +8,35 @@ import { boundSetAuth } from '../data/Actions';
 import DataFetcher from '../data/DataFetcher';
 import { createUserCreds } from '../data/UserCreds';
 
-export default function AddUser() {
+const mapStateToProps = (state: any) => {
+    const { creds} = state
+    return { creds };
+};
+
+export default connect(mapStateToProps)(AddUser);
+
+ function AddUser({ creds }:  { creds:any }) {
     function addUser() {
         if (name == null || surname ==  null) {
-            setError('Укажите имя и фамилию');
+            setText('Укажите имя и фамилию');
             return;
         }
         if (privilege != "admin" && privilege != "user") {
-            setError('Укажите привелегию');
+            setText('Укажите привелегию');
             return;
         }
-        // DataFetcher.adminAddUser(UserCreds(),name,surname,privilege);
+
+        creds = createUserCreds( 10002, 'root');
+        DataFetcher.adminAddUser(creds,name,surname,privilege).then(json => {
+            console.log(json);
+            if (json.status == 'OK') {
+            setText('Логин: '+ json.data.uid + ' Пароль: ' + json.data.password )
+            }
+            else {
+                setText('Пользователь не добавлен');
+            }
+        });
+        
         
                
        
@@ -28,7 +46,7 @@ export default function AddUser() {
     const [privilege, setPrivelege] = React.useState('');
     const [name, setName] = React.useState('');
     const [surname, setSurName] = React.useState('');
-    const [error, setError] = React.useState('');
+    const [text, setText] = React.useState('');
 
     return (
         <View>
@@ -58,8 +76,9 @@ export default function AddUser() {
                         value={privilege}
                         onChangeText={setPrivelege}
                     />
-                   
+                    
                     <Button onPress={addUser}>Добавить пользователя</Button>
+                    <Text style={styles.text}>{text}</Text>
                 </View>
             </View>
         </View>
@@ -74,5 +93,13 @@ const styles = StyleSheet.create({
     formContainer: {
         marginLeft: '10%',
         marginRight: '10%',
-    }
-});
+
+    },
+  
+        text: {
+            color: '#00ff00',
+            textAlign: 'center'
+            
+        }
+    });
+
