@@ -26,7 +26,7 @@ export default connect(mapStateToProps)(AddUser);
             return;
         }
 
-        creds = createUserCreds( 10002, 'root');
+        
         DataFetcher.adminAddUser(creds,name,surname,privilege).then(json => {
             console.log(json);
             if (json.status == 'OK') {

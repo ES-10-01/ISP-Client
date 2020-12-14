@@ -18,6 +18,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 import { connect } from 'react-redux';
 import BottomTabNavigatorAdmin from './BottomTabNavigatorAdmin';
 import { BottomNavigation } from 'react-native-paper';
+import ChangePassword from '../screens/ResetPasswordScreen';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -36,8 +37,9 @@ function Navigation({ colorScheme, isAuth, isAdmin }: { colorScheme: ColorScheme
 const Stack = createStackNavigator();
 
 function RootNavigator({ isAuth, isAdmin }:  { isAuth: boolean, isAdmin: boolean }) {
-    const rootScreen = (!isAuth) ? FirstLoginScreen :
-         (isAdmin) ? BottomTabNavigatorAdmin : BottomTabNavigator;
+    const rootScreen = 
+    (!isAuth) ? FirstLoginScreen :
+       (isAdmin) ? BottomTabNavigatorAdmin : BottomTabNavigator;
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>

@@ -9,3 +9,4 @@ export function createUserCreds(userUid: number, password: string): UserCreds {
         password
     };
 }
+  
