@@ -7,44 +7,40 @@ import TopOffset from '../components/TopOffset';
 import DataFetcher from '../data/DataFetcher';
 
 const mapStateToProps = (state: any) => {
-    const { creds} = state
+    const { creds } = state
     return { creds };
 };
 
 export default connect(mapStateToProps)(RenameLock);
 
- function RenameLock({ creds }:  { creds:any }) {
-
-
+function RenameLock({ creds }: { creds: any }) {
     function rename() {
-        DataFetcher.adminRenameLock(creds,20,lockName).then(json => {
+        DataFetcher.adminRenameLock(creds, 20, lockName).then(json => {
             console.log(json);
-            if (lockName =='попа' )
-            {setErrorText('Это имя уже используется');
-        return;}
+            if (lockName == 'попа') {
+                setErrorText('Это имя уже используется');
+                return;
+            }
             if (json.status == 'OK') {
-            setText('Имя замка измененно' )
+                setText('Имя замка измененно')
             }
             else {
                 setErrorText('Не удалось изменить имя ');
             }
-        
-    });
 
+        });
+    }
 
-}
     const [lockName, setLockName] = React.useState('');
     const [errortext, setErrorText] = React.useState('');
     const [text, setText] = React.useState('');
-
 
     return (
         <View>
             <TopOffset />
             <View style={styles.container}>
                 <View style={styles.formContainer}>
-                    <Headline style={{ textAlign: 'center', }}>Smart Lock </Headline>
-                    <Headline style={{ textAlign: 'center', }}>Введите имя замка </Headline>
+                    <Headline style={{ textAlign: 'center', }}>Введите имя замка</Headline>
                     <TextInput
                         mode="outlined"
                         value={lockName}
@@ -71,11 +67,9 @@ const styles = StyleSheet.create({
     text: {
         color: '#00ff00',
         textAlign: 'center'
-        
     },
     errtext: {
         color: '#AA0000',
         textAlign: 'center'
-        
-    }
+    },
 });

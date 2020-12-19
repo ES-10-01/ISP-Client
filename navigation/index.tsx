@@ -23,7 +23,6 @@ import { connect } from 'react-redux';
 import BottomTabNavigatorAdmin from './BottomTabNavigatorAdmin';
 import { BottomNavigation } from 'react-native-paper';
 import { AppRegistry } from 'react-native';
-import ModifyUser from '../screens/ModifyUserScreen';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -42,27 +41,30 @@ function Navigation({ colorScheme, isAuth, isAdmin }: { colorScheme: ColorScheme
 const Stack = createStackNavigator();
 
 function RootNavigator({ isAuth, isAdmin }:  { isAuth: boolean, isAdmin: boolean }) {
+    
+    const rootScreen =
+        (!isAuth) ? FirstLoginScreen :
+        (isAdmin) ? BottomTabNavigatorAdmin : BottomTabNavigatorAdmin;
 
-     const rootScreen =  ModifyUserScreen;
-    //  (!isAuth) ? FirstLoginScreen :
-    //   (isAdmin) ? BottomTabNavigatorAdmin : BottomTabNavigatorAdmin;
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Root" component={rootScreen} />
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-            <Stack.Screen name="FirstLogin" component={FirstLoginScreen} />
-            <Stack.Screen name="PinLogin" component={PinLoginScreen} />
-            <Stack.Screen name="LockList" component={LockListScreen} />
-            <Stack.Screen name="ConfirmCode" component={ConfirmCodeScreen} />
-            <Stack.Screen name="UserList" component={UserListScreen} />
+
+            <Stack.Screen name="AccessSettings" component={AccessSettingsScreen} />
             <Stack.Screen name="AddUser" component={AddUserScreen} />
-            <Stack.Screen name="Settings" component={SettingsScreen} />
-            <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />
-            <Stack.Screen name="RenameLock" component={RenameLockScreen} />
-            <Stack.Screen name="AccesSettings" component={AccessSettingsScreen} />
             <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+            <Stack.Screen name="ConfirmCode" component={ConfirmCodeScreen} />
+            <Stack.Screen name="FirstLogin" component={FirstLoginScreen} />
             <Stack.Screen name="LockForUserSettingsAdmin" component={LockForUserSettingsAdminScreen} />
+            <Stack.Screen name="LockList" component={LockListScreen} />
+            <Stack.Screen name="ModifyUser" component={ModifyUserScreen} />
+            <Stack.Screen name="PinLogin" component={PinLoginScreen} />
+            <Stack.Screen name="RenameLock" component={RenameLockScreen} />
+            <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
+            <Stack.Screen name="UserList" component={UserListScreen} />
         </Stack.Navigator>
     );
 }

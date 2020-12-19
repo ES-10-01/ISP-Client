@@ -5,7 +5,13 @@ import { Button, Headline, Text, TextInput } from 'react-native-paper';
 import { View } from '../components/Themed';
 import TopOffset from '../components/TopOffset';
 
-export default function SettingsScreen() {
+export default function SettingsScreen(props: any) {
+    function openScreen(screenName: string) {
+        return () => {
+            props.navigation.navigate(screenName);
+        };
+    }
+
     function change() {
         //TODO
     }
@@ -15,9 +21,11 @@ export default function SettingsScreen() {
             <TopOffset />
             <View style={styles.container}>
                 <View style={styles.formContainer}>
-                    <Headline style={{ textAlign: 'center', }}>Smart Lock</Headline>
-                    <Button onPress={change}>Изменить пароль </Button>
-                    <Button onPress={change}>Быстрый вход</Button>
+                    <Headline style={{ textAlign: 'center', }}>Мои настройки</Headline>
+                    <Button onPress={openScreen('ResetPassword')}>Сбросить пароль</Button>
+                    {/* <Button onPress={openScreen('LockForUserSettingsAdmin')}>Настройка доступа</Button> */}
+                    <Button>Настройка доступа</Button>
+                 
                 </View>
             </View>
         </View>

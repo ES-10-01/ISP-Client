@@ -8,6 +8,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import AccessSettingsScreen from '../screens/AccessSettingsScreen';
 import LockListScreen from '../screens/LockListScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import UserListScreen from '../screens/UserListScreen';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -26,7 +27,7 @@ export default function BottomTabNavigatorAdmin() {
                 }}
             />
             <BottomTab.Screen
-                name="Настройки доступа"
+                name="Пользователи"
                 component={TabAccessSettingsNavigator}
                 options={{
                     tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
@@ -65,9 +66,9 @@ function TabAccessSettingsNavigator() {
     return (
         <TabAccessSettingsStack.Navigator>
             <TabAccessSettingsStack.Screen
-                name="TabAccessSettings"
-                component={AccessSettingsScreen}
-                options={{ headerTitle: 'Настройки доступа' }}
+                name="UserListScreen"
+                component={UserListScreen}
+                options={{ headerTitle: 'Пользователи' }}
             />
         </TabAccessSettingsStack.Navigator>
     );

@@ -57,7 +57,7 @@ export default connect(mapStateToProps)(LockForUserSettingsAdminScreen);
         <View style={{ paddingBottom: '50%', marginBottom: '100%' }}>
             <TopOffset />
             <View style={styles.container}>
-                <Headline style={{ textAlign: 'center', }}>Smart Lock</Headline>
+                <Headline style={{ textAlign: 'center', }}>Управление замками пользователя YYY</Headline>
                 <ScrollView>
                     <View style={{ paddingBottom: '50%', marginBottom: '100%' }}>
                         <DataTable>

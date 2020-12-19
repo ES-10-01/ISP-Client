@@ -52,7 +52,7 @@ export default connect(mapStateToProps)(ChangePassword);
             <TopOffset />
             <View style={styles.container}>
                 <View style={styles.formContainer}>
-                    <Headline style={{ textAlign: 'center', }}>Smart Lock</Headline>
+                    <Headline style={{ textAlign: 'center', }}>Смена пароля</Headline>
                     <TextInput
                         secureTextEntry={true}
                         mode="outlined"

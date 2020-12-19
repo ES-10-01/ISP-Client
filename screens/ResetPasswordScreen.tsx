@@ -41,8 +41,7 @@ export default connect(mapStateToProps)(ResetPassword);
             <TopOffset />
             <View style={styles.container}>
                 <View style={styles.formContainer}>
-                    <Headline style={{ textAlign: 'center', }}>Smart Lock</Headline>
-                    <Headline style={{ textAlign: 'center', }}>Сбросить пароль</Headline>
+                    <Headline style={{ textAlign: 'center', }}>Сменить свой пароль</Headline>
                     <TextInput
                         secureTextEntry={true}
                         mode="outlined"
@@ -53,7 +52,7 @@ export default connect(mapStateToProps)(ResetPassword);
                     <TextInput
                         secureTextEntry={true}
                         mode="outlined"
-                        label=" Повторите пароль"
+                        label="Повторите пароль"
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
                     />

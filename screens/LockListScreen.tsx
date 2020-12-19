@@ -8,30 +8,32 @@ import DataFetcher from '../data/DataFetcher';
 import { CheckBox } from "react-native";
 
 import { createUserCreds } from '../data/UserCreds';
+import { Alert } from 'react-native';
 
 const mapStateToProps = (state: any) => {
-    const { creds} = state
+    const { creds } = state
     return { creds };
 };
 
 export default connect(mapStateToProps)(LockListScreen);
 
- function LockListScreen({ creds }:  { creds:any }) {
+function LockListScreen({ creds }: { creds: any }) {
     const [locks, setLocks] = React.useState<any>([]);
     React.useEffect(() => {
-            DataFetcher.getAllLocks(creds).then(json => {
+        DataFetcher.getAllLocks(creds).then(json => {
             console.log(json);
             if (json.status == 'OK') {
-             
-                 setLocks([...json.data]);
-        }
-        else{() => setLocks([...locks, 'ОШИБКА']); }
+                setLocks([...json.data]);
+            }
+            else { 
+                Alert.alert('Ошибка', json.message);
+            }
         });
-        
-         },[]);
-         function change() {
-        
-        }
+    }, []);
+
+    function change() {
+
+    }
 
     const renderLocks = () => {
         const toRender = [];
@@ -42,7 +44,9 @@ export default connect(mapStateToProps)(LockListScreen);
                 <DataTable.Row key={i}>
                     <DataTable.Cell>
                         {lock.lock_name}
-                     
+                    </DataTable.Cell>
+                    <DataTable.Cell>
+                        <Text>TODO</Text>
                     </DataTable.Cell>
                 </DataTable.Row>);
         }
@@ -53,15 +57,16 @@ export default connect(mapStateToProps)(LockListScreen);
         <View>
             <TopOffset />
             <View style={styles.container}>
-                <Headline style={{ textAlign: 'center', }}>Smart Lock</Headline>
+                <Headline style={{ textAlign: 'center', }}>Доступные замки</Headline>
                 <ScrollView>
                     <View style={{ paddingBottom: '50%', marginBottom: '100%' }}>
                         <DataTable>
                             <DataTable.Header>
                                 <DataTable.Title>
-                                    <Text style={{ fontSize: 14, color: '#777' }}>Доступные замки</Text>
-                                    
-                                    
+                                    <Text style={{ fontSize: 14, color: '#777' }}>Замок</Text>
+                                </DataTable.Title>
+                                <DataTable.Title>
+                                    <Text style={{ fontSize: 14, color: '#777' }}>Действия</Text>
                                 </DataTable.Title>
                             </DataTable.Header>
                             {renderLocks()}
@@ -78,6 +83,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     checkbox: {
-      
-      }
+
+    }
 });

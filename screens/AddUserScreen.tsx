@@ -9,15 +9,15 @@ import DataFetcher from '../data/DataFetcher';
 import { createUserCreds } from '../data/UserCreds';
 
 const mapStateToProps = (state: any) => {
-    const { creds} = state
+    const { creds } = state
     return { creds };
 };
 
 export default connect(mapStateToProps)(AddUser);
 
- function AddUser({ creds }:  { creds:any }) {
+function AddUser({ creds }: { creds: any }) {
     function addUser() {
-        if (name == null || surname ==  null) {
+        if (name == null || surname == null) {
             setText('Укажите имя и фамилию');
             return;
         }
@@ -25,21 +25,17 @@ export default connect(mapStateToProps)(AddUser);
             setText('Укажите привелегию');
             return;
         }
-        
-        DataFetcher.adminAddUser(creds,name,surname,privilege).then(json => {
+
+        DataFetcher.adminAddUser(creds, name, surname, privilege).then(json => {
             console.log(json);
             if (json.status == 'OK') {
-            
-            setText('Логин: '+ json.data.uid + ' Пароль: ' + json.data.password )
+
+                setText('Логин: ' + json.data.uid + ' Пароль: ' + json.data.password)
             }
             else {
                 setText('Пользователь не добавлен');
             }
         });
-        
-        
-               
-       
     }
 
 
@@ -53,30 +49,27 @@ export default connect(mapStateToProps)(AddUser);
             <TopOffset />
             <View style={styles.container}>
                 <View style={styles.formContainer}>
-                    <Headline style={{ textAlign: 'center', }}>Smart Lock</Headline>
                     <Headline style={{ textAlign: 'center', }}>Добавление пользователя</Headline>
                     <TextInput
-                      
+
                         mode="outlined"
                         label="Имя "
                         value={name}
                         onChangeText={setName}
                     />
                     <TextInput
-                      
-                      mode="outlined"
-                      label="Фамилия"
-                      value={surname}
-                      onChangeText={setSurName}
-                  />
+                        mode="outlined"
+                        label="Фамилия"
+                        value={surname}
+                        onChangeText={setSurName}
+                    />
                     <TextInput
-                      
                         mode="outlined"
                         label="Привелегия"
                         value={privilege}
                         onChangeText={setPrivelege}
                     />
-                    
+
                     <Button onPress={addUser}>Добавить пользователя</Button>
                     <Text style={styles.text}>{text}</Text>
                 </View>
@@ -93,13 +86,10 @@ const styles = StyleSheet.create({
     formContainer: {
         marginLeft: '10%',
         marginRight: '10%',
-
     },
-  
-        text: {
-            color: '#00ff00',
-            textAlign: 'center'
-            
-        }
-    });
+    text: {
+        color: '#00ff00',
+        textAlign: 'center'
+    },
+});
 
