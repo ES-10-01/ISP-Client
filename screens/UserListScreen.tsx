@@ -35,8 +35,12 @@ function UserListScreen(props: any) {
 
     React.useEffect(onRefresh, []);
 
-    const editUser = () => {
-        openScreen('ModifyUser');
+    const editUser = (data: any) => {
+        return () => {
+            props.navigation.navigate('ModifyUser', {
+                userData: data
+            });
+        };
     }
 
     const deleteUser = (id: any) => {
@@ -62,7 +66,7 @@ function UserListScreen(props: any) {
                         {user['name']} {user['surname']}
                     </DataTable.Cell>
                     <DataTable.Cell>
-                        <Button icon='account-edit' onPress={editUser}> </Button>
+                        <Button icon='account-edit' onPress={editUser(user)}> </Button>
                         <Button icon='delete' onPress={deleteUser(user['uid'])}> </Button>
                     </DataTable.Cell>
                 </DataTable.Row>);
