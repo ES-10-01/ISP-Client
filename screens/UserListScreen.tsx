@@ -85,9 +85,8 @@ function UserListScreen(props: any) {
         <View>
             <TopOffset />
             <View style={styles.container}>
-                <Headline style={{ textAlign: 'center', }}>Управление пользователями</Headline>
                 <ScrollView refreshControl={refreshControl}>
-                    <View style={{ paddingBottom: '50%', marginBottom: '100%' }}>
+                    <View style={{ paddingBottom: '10%', marginBottom: '50%' }}>
                         <DataTable>
                             <DataTable.Header>
                                 <DataTable.Title>
@@ -109,7 +108,7 @@ function UserListScreen(props: any) {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 10,
+        marginTop: 0,
     },
 });
 

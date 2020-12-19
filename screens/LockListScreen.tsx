@@ -57,7 +57,6 @@ function LockListScreen({ creds }: { creds: any }) {
         <View>
             <TopOffset />
             <View style={styles.container}>
-                <Headline style={{ textAlign: 'center', }}>Доступные замки</Headline>
                 <ScrollView>
                     <View style={{ paddingBottom: '50%', marginBottom: '100%' }}>
                         <DataTable>
@@ -80,7 +79,7 @@ function LockListScreen({ creds }: { creds: any }) {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 10,
+        marginTop: 0,
     },
     checkbox: {
 

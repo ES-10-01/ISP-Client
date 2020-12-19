@@ -23,21 +23,21 @@ export default function BottomTabNavigatorAdmin() {
                 name="Список замков"
                 component={TabLockListNavigator}
                 options={{
-                    tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+                    tabBarIcon: ({ color }) => <TabBarIcon name="ios-lock" color={color} />,
                 }}
             />
             <BottomTab.Screen
                 name="Пользователи"
                 component={TabAccessSettingsNavigator}
                 options={{
-                    tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+                    tabBarIcon: ({ color }) => <TabBarIcon name="ios-person" color={color} />,
                 }}
             />
             <BottomTab.Screen
                 name="Настройки"
                 component={TabSettingsNavigator}
                 options={{
-                    tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+                    tabBarIcon: ({ color }) => <TabBarIcon name="ios-settings" color={color} />,
                 }}
             />
         </BottomTab.Navigator>
