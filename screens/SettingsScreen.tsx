@@ -23,9 +23,7 @@ export default function SettingsScreen(props: any) {
                 <View style={styles.formContainer}>
                     <Headline style={{ textAlign: 'center', }}>Мои настройки</Headline>
                     <Button onPress={openScreen('ResetPassword')}>Сбросить пароль</Button>
-                    {/* <Button onPress={openScreen('LockForUserSettingsAdmin')}>Настройка доступа</Button> */}
-                    <Button>Настройка доступа</Button>
-                 
+                    <Button onPress={openScreen('PinSetup')}>Настройка доступа</Button>
                 </View>
             </View>
         </View>

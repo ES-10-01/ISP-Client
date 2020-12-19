@@ -5,45 +5,10 @@ import { connect } from 'react-redux';
 
 import { View } from '../components/Themed';
 import TopOffset from '../components/TopOffset';
-import { boundSetAuth } from '../data/Actions';
-import DataFetcher from '../data/DataFetcher';
 import DataStorage from '../data/DataStorage';
-import { createUserCreds } from '../data/UserCreds';
 
-function PinLoginScreen(props: any) {
+function PinSetupScreen(props: any) {
     const [pin, setPin] = React.useState('');
-    const [isFingerprint, setIsFingerprint] = React.useState(false);
-
-    const enableFingerprint = () => setIsFingerprint(true);
-    const disableFingerprint = () => setIsFingerprint(false);
-
-    React.useEffect(() => {
-        if (pin.length == 4) {
-            (async () => {
-                const uid = await DataStorage.getUserUid(pin);
-                const pass = await DataStorage.getUserPassword(pin);
-                console.log('uid: ' + uid);
-                console.log('pass: ' + pass);
-                if (uid == null || pass == null) {
-                    Alert.alert('Ошибка', 'Не правильный PIN-код.');
-                    delAll();
-                }
-                else {
-                    const creds = createUserCreds(uid, pass);
-                    DataFetcher.login(creds)
-                        .then(json => {
-                            console.log(json);
-                            if (json.status == 'OK') {
-                                props.setAuth(uid, pass, false)
-                            }
-                            else {
-                                Alert.alert('Ошибка', 'Неправильный UID или пароль.');
-                            }
-                        });
-                }
-            })();
-        }
-    }, [pin]);
 
     const printPin = () => {
         let nums = pin.split('');
@@ -69,12 +34,27 @@ function PinLoginScreen(props: any) {
         setPin('');
     }
 
+    const savePin = () => {
+        if (pin.length < 4) {
+            Alert.alert('Ошибка', 'Нужно указать pin-код из 4 цифр');
+            return;
+        }
+        DataStorage.setUserUid(props.creds.userUid, pin);
+        DataStorage.setUserPassword(props.creds.password, pin);
+        props.navigation.goBack();
+    }
+
+    const dontUsePin = () => {
+        DataStorage.deleteUserCreds();
+        props.navigation.goBack();
+    }
+
     return (
         <View>
             <TopOffset />
             <View style={styles.container}>
                 <View style={styles.formContainer}>
-                    <Headline style={{ textAlign: 'center', }}>Smart Lock</Headline>
+                    <Headline style={{ textAlign: 'center', }}>Пин-код для входа</Headline>
                     <Headline style={{ textAlign: 'center', }}>{printPin()}</Headline>
                     <View style={styles.rowStyle}>
                         <NumBtn num={'1'} />
@@ -92,13 +72,6 @@ function PinLoginScreen(props: any) {
                         <NumBtn num={'9'} />
                     </View>
                     <View style={styles.rowStyle}>
-                        {/* <IconButton
-                            onPress={enableFingerprint}
-                            icon="fingerprint"
-                            color={Colors.purple500}
-                            size={20}
-                            style={{ width: 50, }}
-                        /> */}
                         <IconButton
                             onPress={delChar}
                             icon="chevron-left"
@@ -114,18 +87,10 @@ function PinLoginScreen(props: any) {
                             size={20}
                             style={{ width: 50, }}
                         />
-                        {/* <Button onPress={delChar}>del</Button> */}
                     </View>
                 </View>
-                <Portal>
-                    <Modal visible={isFingerprint} onDismiss={disableFingerprint} contentContainerStyle={styles.modalContainerStyle}>
-                        <Title>Вход по отпечатку</Title>
-                        <Text>
-                            Приложите палец к сканеру отпечатка.{'\n'}
-                            Если нет сканера, используйте пин-код.
-                        </Text>
-                    </Modal>
-                </Portal>
+                <Button onPress={savePin}>Сохранить</Button>
+                <Button onPress={dontUsePin}>Не использовать PIN</Button>
             </View>
         </View>
     );
@@ -154,10 +119,9 @@ const styles = StyleSheet.create({
     },
 });
 
-const mapDispatchToProps = (dispatch: any, props: any) => {
-    return {
-        setAuth: (uid: number, pass: string, isAdmin: boolean) => boundSetAuth(dispatch, uid, pass, isAdmin),
-    }
+const mapStateToProps = (state: any) => {
+    const { creds } = state
+    return { creds };
 };
 
-export default connect(null, mapDispatchToProps)(PinLoginScreen);
+export default connect(mapStateToProps)(PinSetupScreen);

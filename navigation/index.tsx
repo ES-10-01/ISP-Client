@@ -23,6 +23,8 @@ import { connect } from 'react-redux';
 import BottomTabNavigatorAdmin from './BottomTabNavigatorAdmin';
 import { BottomNavigation } from 'react-native-paper';
 import { AppRegistry } from 'react-native';
+import PinSetupScreen from '../screens/PinSetupScreen';
+import DataStorage from '../data/DataStorage';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -41,11 +43,17 @@ function Navigation({ colorScheme, isAuth, isAdmin }: { colorScheme: ColorScheme
 const Stack = createStackNavigator();
 
 function RootNavigator({ isAuth, isAdmin }:  { isAuth: boolean, isAdmin: boolean }) {
-    
-    const rootScreen =
-        (!isAuth) ? FirstLoginScreen :
-        (isAdmin) ? BottomTabNavigatorAdmin : BottomTabNavigatorAdmin;
 
+    const [ hasPin, setHasPin ] = React.useState<any>(null);
+
+    DataStorage.isPinSet().then(_hasPin => {
+        setHasPin(_hasPin);
+    })
+
+    const rootScreen =
+        (!isAuth && hasPin) ? PinLoginScreen :
+        (!isAuth && !hasPin) ? FirstLoginScreen :
+        (isAdmin) ? BottomTabNavigatorAdmin : BottomTabNavigatorAdmin;
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -61,6 +69,7 @@ function RootNavigator({ isAuth, isAdmin }:  { isAuth: boolean, isAdmin: boolean
             <Stack.Screen name="LockList" component={LockListScreen} />
             <Stack.Screen name="ModifyUser" component={ModifyUserScreen} />
             <Stack.Screen name="PinLogin" component={PinLoginScreen} />
+            <Stack.Screen name="PinSetup" component={PinSetupScreen} />
             <Stack.Screen name="RenameLock" component={RenameLockScreen} />
             <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
