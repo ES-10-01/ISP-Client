@@ -50,10 +50,7 @@ export default class DataStorage {
     }
 
     private static async checkPin(pin: string) {
-        console.log('entered pin: ' + pin);
         const realPin = await AsyncStorage.getItem('pin');
-        console.log('real pin: ' + realPin);
-        console.log('cmp: ' + (realPin == pin));
         return realPin === pin;
     }
 

@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Alert, StyleSheet } from 'react-native';
+import { Alert, DevSettings, StyleSheet } from 'react-native';
 import { Button, Colors, Headline, IconButton, Modal, Portal, Text, TextInput, Title } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 import { View } from '../components/Themed';
 import TopOffset from '../components/TopOffset';
-import { boundSetAuth } from '../data/Actions';
+import { boundSetAuth, boundSetNoAuth } from '../data/Actions';
 import DataFetcher from '../data/DataFetcher';
 import DataStorage from '../data/DataStorage';
 import { createUserCreds } from '../data/UserCreds';
@@ -17,13 +17,15 @@ function PinLoginScreen(props: any) {
     const enableFingerprint = () => setIsFingerprint(true);
     const disableFingerprint = () => setIsFingerprint(false);
 
+    const [isLogin, setIsLogin] = React.useState(false);
+
     React.useEffect(() => {
         if (pin.length == 4) {
+            setIsLogin(true);
             (async () => {
                 const uid = await DataStorage.getUserUid(pin);
                 const pass = await DataStorage.getUserPassword(pin);
-                console.log('uid: ' + uid);
-                console.log('pass: ' + pass);
+                
                 if (uid == null || pass == null) {
                     Alert.alert('Ошибка', 'Не правильный PIN-код.');
                     delAll();
@@ -34,13 +36,14 @@ function PinLoginScreen(props: any) {
                         .then(json => {
                             console.log(json);
                             if (json.status == 'OK') {
-                                props.setAuth(uid, pass, false)
+                                props.setAuth(uid, pass, json.data.privileges == 'ADMIN')
                             }
                             else {
                                 Alert.alert('Ошибка', 'Неправильный UID или пароль.');
                             }
                         });
                 }
+                setIsLogin(false);
             })();
         }
     }, [pin]);
@@ -68,6 +71,21 @@ function PinLoginScreen(props: any) {
     const delAll = () => {
         setPin('');
     }
+
+    const changeAccount = () => {
+        //props.navigation.navigate('FirstLogin');
+        //DevSettings.reload();
+        DataStorage.deleteUserCreds();
+        props.setNoAuth();
+    }
+
+    if (isLogin)
+        return (
+            <View>
+                <TopOffset />
+                <Headline>Выполняется вход...</Headline>
+            </View>
+        );
 
     return (
         <View>
@@ -116,6 +134,7 @@ function PinLoginScreen(props: any) {
                         />
                         {/* <Button onPress={delChar}>del</Button> */}
                     </View>
+                    <Button onPress={changeAccount}>Войти в другой аккаунт</Button>
                 </View>
                 <Portal>
                     <Modal visible={isFingerprint} onDismiss={disableFingerprint} contentContainerStyle={styles.modalContainerStyle}>
@@ -157,6 +176,7 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = (dispatch: any, props: any) => {
     return {
         setAuth: (uid: number, pass: string, isAdmin: boolean) => boundSetAuth(dispatch, uid, pass, isAdmin),
+        setNoAuth: () => boundSetNoAuth(dispatch),
     }
 };
 

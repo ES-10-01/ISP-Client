@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { Button, Headline, Text, TextInput } from 'react-native-paper';
 import { connect } from 'react-redux';
 
@@ -22,11 +22,11 @@ function FirstLoginScreen(props: any) {
     function login() {
         const uid = convertUid(userUid);
         if (uid == null || uid == 0) {
-            setError('Нужно указать корректный UID.');
+            Alert.alert('Нужно указать корректный UID.');
             return;
         }
         if (password == null || password.length < 1) {
-            setError('Нужно указать корректный пароль.');
+            Alert.alert('Нужно указать корректный пароль.');
             return;
         }
 
@@ -34,17 +34,16 @@ function FirstLoginScreen(props: any) {
             .then(json => {
                 console.log(json);
                 if (json.status == 'OK') {
-                    props.setAuth(+userUid, password, false)
+                    props.setAuth(+userUid, password, json.data.privileges == 'ADMIN')
                 }
                 else {
-                    setError('Неправильный UID или пароль.');
+                    Alert.alert('Неправильный UID или пароль.');
                 }
             });
     }
 
     const [userUid, setUserUid] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [error, setError] = React.useState('');
 
     return (
         <View>
@@ -67,7 +66,6 @@ function FirstLoginScreen(props: any) {
                         onChangeText={setPassword}
                     />
                     <Button onPress={login}>Войти</Button>
-                    <Text style={styles.errorText}>{error}</Text>
                 </View>
             </View>
         </View>

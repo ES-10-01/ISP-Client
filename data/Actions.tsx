@@ -9,3 +9,9 @@ export function boundSetAuth(dispatch: Dispatch,
         isAdmin
     });
 };
+
+export function boundSetNoAuth(dispatch: Dispatch) {
+    dispatch({
+        type: 'NOAUTH'
+    });
+}
