@@ -46,14 +46,24 @@ function RootNavigator({ isAuth, isAdmin }:  { isAuth: boolean, isAdmin: boolean
 
     const [ hasPin, setHasPin ] = React.useState<any>(null);
 
-    DataStorage.isPinSet().then(_hasPin => {
-        setHasPin(_hasPin);
-    })
+    const [ updCounter, setUpdCounter ] = React.useState(0);
+
+    React.useEffect(() => {
+        DataStorage.isPinSet().then(_hasPin => {
+            if (hasPin != _hasPin)
+                setHasPin(_hasPin);
+        });
+    }, [updCounter]);
+
+    setInterval(() => {
+        if (!isAuth)
+            setUpdCounter(updCounter + 1);
+    }, 5000);
 
     const rootScreen =
         (!isAuth && hasPin) ? PinLoginScreen :
         (!isAuth && !hasPin) ? FirstLoginScreen :
-        (isAdmin) ? BottomTabNavigatorAdmin : BottomTabNavigatorAdmin;
+        (isAdmin) ? BottomTabNavigatorAdmin : BottomTabNavigator;
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
