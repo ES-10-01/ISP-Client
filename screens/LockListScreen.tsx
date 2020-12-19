@@ -8,6 +8,7 @@ import DataFetcher from '../data/DataFetcher';
 import { CheckBox } from "react-native";
 
 import { createUserCreds } from '../data/UserCreds';
+
 import { Alert } from 'react-native';
 
 const mapStateToProps = (state: any) => {
@@ -17,10 +18,15 @@ const mapStateToProps = (state: any) => {
 
 export default connect(mapStateToProps)(LockListScreen);
 
-function LockListScreen({ creds }: { creds: any }) {
+function LockListScreen(props:any) {
+
+    function openScreen(screenName: string) {
+        props.navigation.navigate(screenName);
+    }
+
     const [locks, setLocks] = React.useState<any>([]);
     React.useEffect(() => {
-        DataFetcher.getAllLocks(creds).then(json => {
+        DataFetcher.getAllLocks(props.creds).then(json => {
             console.log(json);
             if (json.status == 'OK') {
                 setLocks([...json.data]);
@@ -31,22 +37,28 @@ function LockListScreen({ creds }: { creds: any }) {
         });
     }, []);
 
-    function change() {
-
+    const open = (uid: any) => {
+        return () => {
+            props.navigation.navigate('ConfirmCode', {
+                userData: uid
+            });
+        };
     }
+        
 
     const renderLocks = () => {
         const toRender = [];
         let i = 0;
         for (const lock of locks) {
             i += 1;
+       
             toRender.push(
                 <DataTable.Row key={i}>
                     <DataTable.Cell>
                         {lock.lock_name}
                     </DataTable.Cell>
                     <DataTable.Cell>
-                        <Text>TODO</Text>
+                    <Button onPress={open(lock.lock_uid)}>Открыть</Button>
                     </DataTable.Cell>
                 </DataTable.Row>);
         }
@@ -65,7 +77,7 @@ function LockListScreen({ creds }: { creds: any }) {
                                     <Text style={{ fontSize: 14, color: '#777' }}>Замок</Text>
                                 </DataTable.Title>
                                 <DataTable.Title>
-                                    <Text style={{ fontSize: 14, color: '#777' }}>Действия</Text>
+                                    <Text style={{ fontSize: 14, color: '#777' }}></Text>
                                 </DataTable.Title>
                             </DataTable.Header>
                             {renderLocks()}

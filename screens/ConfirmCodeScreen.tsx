@@ -5,7 +5,8 @@ import { Button, Caption, Headline, Paragraph, Text } from 'react-native-paper';
 import { View } from '../components/Themed';
 import TopOffset from '../components/TopOffset';
 
-export default function ConfirmCodeScreen() {
+export default function ConfirmCodeScreen(props:any) {
+    const user = props.route.params.userData;
     return (
         <View style={styles.outerContainer}>
             <TopOffset />
