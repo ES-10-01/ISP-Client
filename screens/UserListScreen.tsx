@@ -1,19 +1,38 @@
 import * as React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Button, DataTable, Headline, Text, TextInput } from 'react-native-paper';
-
+import DataFetcher from '../data/DataFetcher';
 import { View } from '../components/Themed';
 import TopOffset from '../components/TopOffset';
+import { connect } from 'react-redux';
 
-export default function UserListScreen() {
+const mapStateToProps = (state: any) => {
+    const { creds} = state
+    return { creds };
+};
+export default connect(mapStateToProps)(UserListScreen);
+  function UserListScreen(props: any,{ creds }:  { creds:any }) {
+    function openScreen(screenName: string) {
+        return () => {
+            props.navigation.navigate(screenName);
+        };
+    }
+
+
     const [users, setUsers] = React.useState<any>([]);
 
     const editUser = () => {
-        console.log('todo');
+        openScreen('ModifyUserScreen')
     }
 
     const deleteUser = () => {
-        console.log('todo');
+        DataFetcher.adminDeleteUser(creds, 12).then(json => {
+            console.log(json);
+            if (json.status == 'OK') {
+           //rerender тут  
+           
+            }
+        });
     }
 
     const renderUsers = () => {

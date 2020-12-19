@@ -26,7 +26,7 @@ export default function ModifyUser(props: any) {
                 <View style={styles.formContainer}>
                     <Headline style={{ textAlign: 'center', }}>Smart Lock</Headline>
                     <Button onPress=  {openScreen('ResetPasswordScreen')}> Сбросить пароль </Button>
-                    <Button onPress={change}>Настройка доступа</Button>
+                    <Button onPress={openScreen('LockForUserSettingsAdmin')}>Настройка доступа</Button>
                  
                 </View>
             </View>

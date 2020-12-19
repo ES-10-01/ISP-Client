@@ -7,6 +7,7 @@ import FirstLoginScreen from '../screens/FirstLoginScreen';
 import LockListScreen from '../screens/LockListScreen';
 import AccessSettingsScreen from '../screens/AccessSettingsScreen'
 import AddUserScreen from '../screens/AddUserScreen';
+import LockForUserSettingsAdminScreen from '../screens/LockForUserSettingsAdminScreen';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 import RenameLockScreen from '../screens/RenameLockScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -42,9 +43,9 @@ const Stack = createStackNavigator();
 
 function RootNavigator({ isAuth, isAdmin }:  { isAuth: boolean, isAdmin: boolean }) {
 
-     const rootScreen =  
-     (!isAuth) ? FirstLoginScreen :
-      (isAdmin) ? BottomTabNavigatorAdmin : BottomTabNavigatorAdmin;
+     const rootScreen =  ModifyUserScreen;
+    //  (!isAuth) ? FirstLoginScreen :
+    //   (isAdmin) ? BottomTabNavigatorAdmin : BottomTabNavigatorAdmin;
 
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -61,6 +62,7 @@ function RootNavigator({ isAuth, isAdmin }:  { isAuth: boolean, isAdmin: boolean
             <Stack.Screen name="RenameLock" component={RenameLockScreen} />
             <Stack.Screen name="AccesSettings" component={AccessSettingsScreen} />
             <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+            <Stack.Screen name="LockForUserSettingsAdmin" component={LockForUserSettingsAdminScreen} />
         </Stack.Navigator>
     );
 }

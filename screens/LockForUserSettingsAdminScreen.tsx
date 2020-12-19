@@ -14,9 +14,9 @@ const mapStateToProps = (state: any) => {
     return { creds };
 };
 
-export default connect(mapStateToProps)(LockListScreen);
+export default connect(mapStateToProps)(LockForUserSettingsAdminScreen);
 
- function LockListScreen({ creds }:  { creds:any }) {
+ function LockForUserSettingsAdminScreen({ creds }:  { creds:any }) {
     const [locks, setLocks] = React.useState<any>([]);
     React.useEffect(() => {
             DataFetcher.getAllLocks(creds).then(json => {
@@ -42,7 +42,11 @@ export default connect(mapStateToProps)(LockListScreen);
                 <DataTable.Row key={i}>
                     <DataTable.Cell>
                         {lock.lock_name}
-                     
+                        <CheckBox
+                             value={true}
+                            onValueChange={change}
+                            style={styles.checkbox}
+                        />
                     </DataTable.Cell>
                 </DataTable.Row>);
         }
@@ -50,7 +54,7 @@ export default connect(mapStateToProps)(LockListScreen);
     }
 
     return (
-        <View>
+        <View style={{ paddingBottom: '50%', marginBottom: '100%' }}>
             <TopOffset />
             <View style={styles.container}>
                 <Headline style={{ textAlign: 'center', }}>Smart Lock</Headline>
@@ -59,9 +63,10 @@ export default connect(mapStateToProps)(LockListScreen);
                         <DataTable>
                             <DataTable.Header>
                                 <DataTable.Title>
-                                    <Text style={{ fontSize: 14, color: '#777' }}>Доступные замки</Text>
-                                    
-                                    
+                                    <Text style={{ fontSize: 14, color: '#777' }}>Все замки</Text>
+                                    </DataTable.Title>
+                                    <DataTable.Title>
+                                <Text style={{ fontSize: 14, color: '#777' }}>Доступ</Text>
                                 </DataTable.Title>
                             </DataTable.Header>
                             {renderLocks()}
@@ -75,7 +80,7 @@ export default connect(mapStateToProps)(LockListScreen);
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 10,
+        marginTop: 5,
     },
     checkbox: {
       
