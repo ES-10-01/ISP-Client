@@ -76,14 +76,6 @@ export default class DataFetcher {
         });
     }
 
-    public static adminAddLock(creds: UserCreds, lockIp: string, lockName: string) {
-        return this.performRequest('/admin/lock/add', {
-            ...this.credsToObject(creds),
-            'lock_ip': lockIp,
-            'lock_name': lockName
-        });
-    }
-
     public static adminRenameLock(creds: UserCreds, lockUid: number, newName: string) {
         return this.performRequest('/admin/lock/rename', {
             ...this.credsToObject(creds),
@@ -99,7 +91,7 @@ export default class DataFetcher {
         });
     }
 
-    public static adminAddAccess(creds: UserCreds, lockUid: number, userUid: number) {
+    public static adminAddLockAccess(creds: UserCreds, lockUid: number, userUid: number) {
         return this.performRequest('/admin/user/lock/add', {
             ...this.credsToObject(creds),
             'lock_uid': lockUid,
@@ -107,7 +99,7 @@ export default class DataFetcher {
         });
     }
 
-    public static adminRemoveAccess(creds: UserCreds, lockUid: number, userUid: number) {
+    public static adminRemoveLockAccess(creds: UserCreds, lockUid: number, userUid: number) {
         return this.performRequest('/admin/user/lock/delete', {
             ...this.credsToObject(creds),
             'lock_uid': lockUid,
@@ -119,6 +111,12 @@ export default class DataFetcher {
         return this.performRequest('/admin/user/lock/all', {
             ...this.credsToObject(creds),
             'target_user_uid': userUid
+        });
+    }
+
+    public static adminGetAllLocks(creds: UserCreds) {
+        return this.performRequest('/admin/lock/all', {
+            ...this.credsToObject(creds)
         });
     }
 
