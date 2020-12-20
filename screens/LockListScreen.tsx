@@ -55,7 +55,9 @@ function LockListScreen(props:any) {
             toRender.push(
                 <DataTable.Row key={i}>
                     <DataTable.Cell>
+                    <Button>
                         {lock.lock_name}
+                        </Button>
                     </DataTable.Cell>
                     <DataTable.Cell>
                     <Button onPress={open(lock.lock_uid)}>Открыть</Button>

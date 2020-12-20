@@ -5,9 +5,14 @@ import { connect } from 'react-redux';
 import { View } from '../components/Themed';
 import TopOffset from '../components/TopOffset';
 import DataFetcher from '../data/DataFetcher';
+import navigation from '../navigation';
 const mapStateToProps = (state: any) => {
     const { creds } = state
     return { creds };
+};
+const mapStateToAdmin = (state: any) => {
+    const { isAdmin } = state
+    return { isAdmin };
 };
 export default connect(mapStateToProps)(ConfirmCodeScreen);
 function ConfirmCodeScreen(props:any) {
@@ -35,7 +40,7 @@ function ConfirmCodeScreen(props:any) {
             console.log(json);
             
         });
-        openScreen('LockList');
+        props.navigation.goBack(); 
 
     }
 
