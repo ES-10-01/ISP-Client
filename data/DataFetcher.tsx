@@ -2,8 +2,8 @@ import { UserCreds } from "./UserCreds";
 
 export default class DataFetcher {
     //private static API_BASE_URL = 'https://es-isp-server.herokuapp.com/api';
-    private static API_BASE_URL = 'http://188.242.89.179';
-    
+    private static API_BASE_URL = 'http://188.242.89.179:8080';
+
     public static login(creds: UserCreds) {
         return this.performRequest('/user/login', {
             ...this.credsToObject(creds)
