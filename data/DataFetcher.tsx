@@ -2,7 +2,7 @@ import { UserCreds } from "./UserCreds";
 
 export default class DataFetcher {
     //private static API_BASE_URL = 'https://es-isp-server.herokuapp.com/api';
-    private static API_BASE_URL = 'http://188.242.89.179:8080';
+    private static API_BASE_URL = 'http://188.242.89.179:8080/api';
 
     public static login(creds: UserCreds) {
         return this.performRequest('/user/login', {
@@ -68,12 +68,12 @@ export default class DataFetcher {
     }
 
     public static adminUpdateUser(creds: UserCreds, targetUid: number,
-            resetPassword: boolean, privileges: 'user' | 'admin' | 'default') {
+            resetPassword: boolean) {
         return this.performRequest('/admin/user/update', {
             ...this.credsToObject(creds),
             'target_user_uid': targetUid,
-            'reset_password': resetPassword,
-            ...(privileges == 'default' ? {} : { 'new_privileges': privileges })
+            'reset_password': resetPassword
+           
         });
     }
 

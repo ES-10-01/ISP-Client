@@ -20,31 +20,25 @@ export default connect(mapStateToProps)(ResetPassword);
    
 
     function resetPassword() {
-       
-        setErrorText('');
-        setText('');
+     
         
-        
-        if(newPassword!=confirmPassword) {setErrorText('Пароли не совпадают');
-        return;} 
-        DataFetcher.adminUpdateUser(props.creds, user['uid'], true, user['privileges']).then(json => {
+                  
+        DataFetcher.adminUpdateUser(props.creds, user['uid'], true).then(json => {
             console.log(json);
             if (json.status == 'OK') {
-            setText('Новый пароль' );
-            setText1( json.data.password);
-            }
+                setText1( json.data.password);
+             }
             else {
                 setErrorText('Ошибка смены пароля');
             }
         });
           }
 
-
     const [errortext, setErrorText] = React.useState('');
     const [text, setText] = React.useState('');
     const [text1, setText1] = React.useState('');
-    const [newPassword, setNewPassword] = React.useState('');
-    const [confirmPassword, setConfirmPassword] = React.useState('');
+   
+
 
     return (
         <View>

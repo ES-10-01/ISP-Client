@@ -14,29 +14,50 @@ const mapStateToAdmin = (state: any) => {
     const { isAdmin } = state
     return { isAdmin };
 };
-export default connect(mapStateToProps)(ConfirmCodeScreen);
+export default connect (mapStateToProps)(ConfirmCodeScreen);
 function ConfirmCodeScreen(props:any) {
     function openScreen(screenName: string) {
         props.navigation.navigate(screenName);
     }
-    let PIN:any;
+    const [pin,setPin]=  React.useState<any>('0000');
+    const [text, setText] = React.useState('');
     const data = props.route.params.userData;
+    let counter: number; 
+    counter=0;
      function sendCode() {
-        PIN = '0000'
-        DataFetcher.openLock(props.creds, data).then(json => {
+        
+        DataFetcher.openLock(props.creds, data['lock_uid']).then(json => {
             console.log(json);
             if (json.status == 'OK') {
-                PIN = json.data.lock_PIN
+                setPin(json.data.lock_PIN)
+                let timeoutId = setTimeout(function checkStatus() {
+                    DataFetcher.getLockStatus(props.creds, data['lock_uid']).then(response => {
+                      if (response.status === 'OPENED') {
+                        counter++;
+                        if (counter===1)
+                           { props.navigation.goBack();} 
+                      } else {
+                        timeoutId = setTimeout(checkStatus, 1000);
+                        
+                      }
+                    });
+                  }, 1000);
             }
-            else 
-            PIN = '0000'
-            return PIN
+           
+            
+            return pin
 
         });
-        return PIN
+        return pin
     }
+
+   
+    
+    
+
+
     function deny(){
-        DataFetcher.cancelLockOpen(props.creds, data).then(json => {
+        DataFetcher.cancelLockOpen(props.creds, data['lock_uid']).then(json => {
             console.log(json);
             
         });
@@ -51,10 +72,11 @@ function ConfirmCodeScreen(props:any) {
                 <Headline style={{ textAlign: 'center', }}>Smart Lock</Headline>
                 <View style={styles.centeredContainer}>
                     <Paragraph style={{ textAlign: 'center', }}>
-                        Замок "Название замка" готов к открытию.{'\n'}Для открытия введите код:
+                        Замок { data['lock_name']} готов к открытию.{'\n'}Для открытия введите код:
                     </Paragraph>
                     <Text style={styles.codeText}> {sendCode()}</Text>
                     <Button onPress={deny} >Отменить вход</Button>
+                    <Text > {text}  </Text>
                 </View>
                 <View style={styles.bottomNote}>
                     <Caption style={{ textAlign: 'center' }}>Код активен в течение 30 секунд.</Caption>

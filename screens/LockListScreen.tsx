@@ -37,10 +37,10 @@ function LockListScreen(props:any) {
         });
     }, []);
 
-    const open = (uid: any) => {
+    const open = (lock: any) => {
         return () => {
             props.navigation.navigate('ConfirmCode', {
-                userData: uid
+                userData: lock
             });
         };
     }
@@ -60,7 +60,7 @@ function LockListScreen(props:any) {
                         </Text>
                     </DataTable.Cell>
                     <DataTable.Cell>
-                    <Button onPress={open(lock.lock_uid)}>Открыть</Button>
+                    <Button onPress={open(lock)}>Открыть</Button>
                     </DataTable.Cell>
                 </DataTable.Row>);
         }
