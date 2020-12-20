@@ -84,6 +84,8 @@ function RootNavigator({ isAuth, isAdmin }:  { isAuth: boolean, isAdmin: boolean
             <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="UserList" component={UserListScreen} />
+            <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
+            <Stack.Screen name="BottomTabNavigatorAdmin" component={BottomTabNavigatorAdmin} />
         </Stack.Navigator>
     );
 }

@@ -26,7 +26,7 @@ function SettingsScreen(props: any) {
             <View style={styles.container}>
                 <View style={styles.formContainer}>
                     <Headline style={{ textAlign: 'center', }}>Мои настройки</Headline>
-                    <Button onPress={openScreen('ResetPassword')}>Сбросить пароль</Button>
+                    <Button onPress={openScreen('ChangePassword')}>Сбросить пароль</Button>
                     <Button onPress={openScreen('PinSetup')}>Настройка доступа</Button>
                     <Button onPress={exit}>Выход из аккаунта</Button>
                 </View>

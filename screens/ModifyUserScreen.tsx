@@ -12,8 +12,20 @@ export default function ModifyUserScreen(props: any) {
             props.navigation.navigate(screenName);
         };
     }
-    function change() {
+    const openLockSettings = (data: any) => {
+        return () => {
+            props.navigation.navigate('LockForUserSettingsAdmin', {
+                userData: data
+            });
+        };
+    }
 
+    const openResetScreen = (data: any) => {
+        return () => {
+            props.navigation.navigate('ResetPassword', {
+                userData: data
+            });
+        };
     }
 
     const user = props.route.params.userData;
@@ -26,8 +38,8 @@ export default function ModifyUserScreen(props: any) {
                     <Headline style={{ textAlign: 'center', }}>
                         Настройки пользователя {user['name']} {user['surname']}
                         </Headline>
-                    <Button onPress={openScreen('ResetPassword')}> Сбросить пароль</Button>
-                    <Button onPress={openScreen('LockForUserSettingsAdmin')}>Настройка доступа</Button>
+                    <Button onPress={openResetScreen({...user})}> Сбросить пароль</Button>
+                    <Button onPress={openLockSettings(user)}>Настройка доступа</Button>
                 </View>
             </View>
         </View>

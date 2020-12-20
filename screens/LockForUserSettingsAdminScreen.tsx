@@ -11,27 +11,115 @@ import { createUserCreds } from '../data/UserCreds';
 
 const mapStateToProps = (state: any) => {
     const { creds} = state
+    
     return { creds };
 };
 
 export default connect(mapStateToProps)(LockForUserSettingsAdminScreen);
 
- function LockForUserSettingsAdminScreen({ creds }:  { creds:any }) {
+ function LockForUserSettingsAdminScreen( props:any ) {
     const [locks, setLocks] = React.useState<any>([]);
+    const [uLocks, setULocks] = React.useState<any>([]);
+    const user = props.route.params.userData;
+    let status;
+  
     React.useEffect(() => {
-            DataFetcher.getAllLocks(creds).then(json => {
+            DataFetcher.adminGetAllLocks(props.creds).then(json => {
             console.log(json);
             if (json.status == 'OK') {
-             
                  setLocks([...json.data]);
+                 
         }
         else{() => setLocks([...locks, 'ОШИБКА']); }
         });
-        
-         },[]);
-         function change() {
-        
+
+        DataFetcher.adminGetUserLocks(props.creds,user['uid']).then(json => {
+            console.log(json);
+            if (json.status == 'OK') {
+            
+                 setULocks([...json.data]);
+                 console.log('запрос');
+                 
+                 
         }
+        else{() => setULocks([...uLocks, 'ОШИБКА']); }
+        });
+         },[status]);
+         function change() {
+        }
+
+        function setButton(lock: any){
+            lock.message= 'add'
+            for (const uLock of uLocks) {
+                if (lock.uid == uLock.uid) { 
+                lock.message = 'delete'
+                return 'Отозвать' } }
+            
+                return 'Предоставить'
+        }
+
+        function action(lock:any){
+            return ()=>{
+                
+                if (lock.message == 'delete'){
+                    console.log('Отзываем доступ ')
+                    console.log(lock.uid,user['uid'])
+                    DataFetcher.adminRemoveLockAccess(props.creds,lock.uid,user['uid']).then(json => {
+                    console.log(json);   
+                    lock.message == 'add'  
+                        
+                    DataFetcher.adminGetAllLocks(props.creds).then(json => {
+                        console.log(json);
+                        if (json.status == 'OK') {
+                             setLocks([...json.data]);
+                             
+                    }
+                    else{() => setLocks([...locks, 'ОШИБКА']); }
+                    });
+            
+                    DataFetcher.adminGetUserLocks(props.creds,user['uid']).then(json => {
+                        console.log(json);
+                        if (json.status == 'OK') {
+                        
+                             setULocks([...json.data]);
+                             console.log('запрос');
+                             
+                             
+                    }
+                    else{() => setULocks([...uLocks, 'ОШИБКА']); }
+                    });                  
+                    });}
+                else{
+                    console.log('Открываем доступ')
+                    console.log(lock.uid,user['uid'])
+                    DataFetcher.adminAddLockAccess(props.creds,lock.uid,user['uid']).then(json => {
+                     console.log(json);
+                     DataFetcher.adminGetAllLocks(props.creds).then(json => {
+                        console.log(json);
+                        if (json.status == 'OK') {
+                             setLocks([...json.data]);
+                             
+                    }
+                    else{() => setLocks([...locks, 'ОШИБКА']); }
+                    });
+            
+                    DataFetcher.adminGetUserLocks(props.creds,user['uid']).then(json => {
+                        console.log(json);
+                        if (json.status == 'OK') {
+                        
+                             setULocks([...json.data]);
+                             console.log('запрос');
+                             
+                             
+                    }
+                    else{() => setULocks([...uLocks, 'ОШИБКА']); }
+                    });
+                     lock.message = 'delete'
+            });}
+            
+        }
+        }
+
 
     const renderLocks = () => {
         const toRender = [];
@@ -41,12 +129,10 @@ export default connect(mapStateToProps)(LockForUserSettingsAdminScreen);
             toRender.push(
                 <DataTable.Row key={i}>
                     <DataTable.Cell>
-                        {lock.lock_name}
-                        <CheckBox
-                             value={true}
-                            onValueChange={change}
-                            style={styles.checkbox}
-                        />
+                        {lock.name}
+                    </DataTable.Cell>
+                    <DataTable.Cell>
+                    <Button onPress={action(lock)} >{setButton(lock)}</Button>
                     </DataTable.Cell>
                 </DataTable.Row>);
         }
@@ -57,7 +143,8 @@ export default connect(mapStateToProps)(LockForUserSettingsAdminScreen);
         <View style={{ paddingBottom: '50%', marginBottom: '100%' }}>
             <TopOffset />
             <View style={styles.container}>
-                <Headline style={{ textAlign: 'center', }}>Управление замками пользователя YYY</Headline>
+            <Headline style={{ textAlign: 'center', }}>Настройки для пользователя:</Headline>
+                <Headline style={{ textAlign: 'center', }}>{user['name']}</Headline>
                 <ScrollView>
                     <View style={{ paddingBottom: '50%', marginBottom: '100%' }}>
                         <DataTable>
