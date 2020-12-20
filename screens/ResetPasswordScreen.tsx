@@ -13,16 +13,25 @@ const mapStateToProps = (state: any) => {
 
 export default connect(mapStateToProps)(ResetPassword);
 
- function ResetPassword({ creds }:  { creds:any }) {
+ function ResetPassword(props:any) {
+   
+    const user = props.route.params.userData;
+ 
+   
+
     function resetPassword() {
+       
         setErrorText('');
         setText('');
+        
+        
         if(newPassword!=confirmPassword) {setErrorText('Пароли не совпадают');
         return;} 
-        DataFetcher.updatePassword(creds,newPassword).then(json => {
+        DataFetcher.adminUpdateUser(props.creds, user['uid'], true, user['privileges']).then(json => {
             console.log(json);
             if (json.status == 'OK') {
-            setText('Пароль успешно обновлен' );
+            setText('Новый пароль' );
+            setText1( json.data.password);
             }
             else {
                 setErrorText('Ошибка смены пароля');
@@ -33,6 +42,7 @@ export default connect(mapStateToProps)(ResetPassword);
 
     const [errortext, setErrorText] = React.useState('');
     const [text, setText] = React.useState('');
+    const [text1, setText1] = React.useState('');
     const [newPassword, setNewPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
 
@@ -42,22 +52,10 @@ export default connect(mapStateToProps)(ResetPassword);
             <View style={styles.container}>
                 <View style={styles.formContainer}>
                     <Headline style={{ textAlign: 'center', }}>Сменить свой пароль</Headline>
-                    <TextInput
-                        secureTextEntry={true}
-                        mode="outlined"
-                        label="Новый пароль"
-                        value={newPassword}
-                        onChangeText={setNewPassword}
-                    />
-                    <TextInput
-                        secureTextEntry={true}
-                        mode="outlined"
-                        label="Повторите пароль"
-                        value={confirmPassword}
-                        onChangeText={setConfirmPassword}
-                    />
-                    <Button onPress={resetPassword}>Изменить пароль</Button>
+                  
+                    <Button onPress={resetPassword}>Сбросить Пароль</Button>
                     <Text style={styles.text}>{text}</Text>
+                    <Text style={styles.text}>{text1}</Text>
                     <Text style={styles.errtext}>{errortext}</Text>
                 </View>
             </View>

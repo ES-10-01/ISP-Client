@@ -20,6 +20,14 @@ export default function ModifyUserScreen(props: any) {
         };
     }
 
+    const openResetScreen = (data: any) => {
+        return () => {
+            props.navigation.navigate('ResetPassword', {
+                userData: data
+            });
+        };
+    }
+
     const user = props.route.params.userData;
 
     return (
@@ -30,7 +38,7 @@ export default function ModifyUserScreen(props: any) {
                     <Headline style={{ textAlign: 'center', }}>
                         Настройки пользователя {user['name']} {user['surname']}
                         </Headline>
-                    <Button onPress={openScreen('ResetPassword')}> Сбросить пароль</Button>
+                    <Button onPress={openResetScreen({...user})}> Сбросить пароль</Button>
                     <Button onPress={openLockSettings(user)}>Настройка доступа</Button>
                 </View>
             </View>
